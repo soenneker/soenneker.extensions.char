@@ -14,12 +14,7 @@ public class CharExtensionTests
     [InlineData('_', '_')]
     public void ToUpperInvariant_ConvertsToLowercaseLettersToUppercase(char input, char expected)
     {
-        // Arrange
-
-        // Act
-        var result = input.ToUpperInvariant();
-
-        // Assert
+        char result = input.ToUpperInvariant();
         result.Should().Be(expected);
     }
 
@@ -32,12 +27,7 @@ public class CharExtensionTests
     [InlineData('_', '_')]
     public void ToLowerInvariant_ConvertsToUppercaseLettersToLowercase(char input, char expected)
     {
-        // Arrange
-
-        // Act
-        var result = input.ToLowerInvariant();
-
-        // Assert
+        char result = input.ToLowerInvariant();
         result.Should().Be(expected);
     }
 }
