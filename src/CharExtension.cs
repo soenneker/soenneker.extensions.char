@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
 
 namespace Soenneker.Extensions.Char;
 
@@ -14,10 +13,9 @@ public static class CharExtension
     /// <param name="c">The character to convert.</param>
     /// <returns>The uppercase equivalent of the specified character, if the character is a lowercase letter; otherwise, the specified character.</returns>
     [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static char ToUpperInvariant(this char c)
     {
-        if (c >= 'a' && c <= 'z')
+        if (c is >= 'a' and <= 'z')
         {
             return (char)(c & ~32); // Bitwise AND with complement of 32 sets the 6th bit, converting to uppercase
         }
@@ -31,10 +29,9 @@ public static class CharExtension
     /// <param name="c">The character to convert.</param>
     /// <returns>The lowercase equivalent of the specified character, if the character is an uppercase letter; otherwise, the specified character.</returns>
     [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static char ToLowerInvariant(this char c)
     {
-        if (c >= 'A' && c <= 'Z')
+        if (c is >= 'A' and <= 'Z')
         {
             return (char)(c | 32); // Bitwise OR with 32 sets the 6th bit, converting to lowercase
         }
