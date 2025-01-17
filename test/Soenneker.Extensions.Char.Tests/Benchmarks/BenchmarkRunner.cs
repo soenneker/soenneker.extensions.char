@@ -12,7 +12,7 @@ public class BenchmarkRunner : BenchmarkTest
     {
     }
 
-    //    [Fact]
+    //[Fact]
     public async ValueTask IsDigit()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsDigitBenchmark>(DefaultConf);
@@ -20,7 +20,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    //    [Fact]
+    // [Fact]
     public async ValueTask IsLetterOrDigit()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsLetterOrDigitBenchmark>(DefaultConf);
@@ -28,7 +28,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    //  [Fact]
+    // [Fact]
     public async ValueTask IsWhitespace()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsWhitespaceBenchmark>(DefaultConf);
@@ -36,7 +36,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    //[Fact]
+    //  [Fact]
     public async ValueTask ToLowerInvariant()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<ToLowerInvariantBenchmark>(DefaultConf);
@@ -44,7 +44,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    //[Fact]
+    //  [Fact]
     public async ValueTask ToUpperInvariant()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<ToUpperInvariantBenchmark>(DefaultConf);
@@ -52,7 +52,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    // [Fact]
+    //  [Fact]
     public async ValueTask IsLower()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsLowerBenchmark>(DefaultConf);
@@ -60,7 +60,7 @@ public class BenchmarkRunner : BenchmarkTest
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }
 
-    // [Fact]
+    //   [Fact]
     public async ValueTask IsUpper()
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsUpperBenchmark>(DefaultConf);

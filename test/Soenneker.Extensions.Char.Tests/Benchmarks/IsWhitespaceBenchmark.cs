@@ -14,7 +14,7 @@ public class IsWhitespaceBenchmark
     }
 
     [Benchmark(Baseline = true)]
-    public bool IsWhiteSpaceOld()
+    public bool IsWhiteSpaceBuiltIn()
     {
         return char.IsWhiteSpace(_c); // Using the built-in .NET method
     }
@@ -22,6 +22,6 @@ public class IsWhitespaceBenchmark
     [Benchmark]
     public bool IsWhiteSpace()
     {
-        return _c.IsWhiteSpace();
+        return _c.IsWhiteSpaceFast();
     }
 }
