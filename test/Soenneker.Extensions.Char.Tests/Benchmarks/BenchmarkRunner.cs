@@ -29,9 +29,9 @@ public class BenchmarkRunner : BenchmarkTest
     }
 
     // [Fact]
-    public async ValueTask IsWhitespace()
+    public async ValueTask IsWhiteSpace()
     {
-        Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsWhitespaceBenchmark>(DefaultConf);
+        Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsWhiteSpaceBenchmark>(DefaultConf);
 
         await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
     }

@@ -3,7 +3,7 @@
 namespace Soenneker.Extensions.Char.Tests.Benchmarks;
 
 [MemoryDiagnoser]
-public class IsWhitespaceBenchmark
+public class IsWhiteSpaceBenchmark
 {
     private char _c;
 

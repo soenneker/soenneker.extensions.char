@@ -43,7 +43,7 @@ dotnet add package Soenneker.Extensions.Char
 | IsUpperBuiltIn | 0.2450 ns | 0.0121 ns | 0.0114 ns | baseline |         |         - |          NA |
 | IsUpperFast    | 0.0238 ns | 0.0228 ns | 0.0190 ns |       NA |      NA |         - |          NA |
 
-### `IsWhitespace()`
+### `IsWhiteSpace()`
 
 | Method          | Mean      | Error     | StdDev    | Median    | Ratio    | RatioSD | Allocated | Alloc Ratio |
 |---------------- |----------:|----------:|----------:|----------:|---------:|--------:|----------:|------------:|
