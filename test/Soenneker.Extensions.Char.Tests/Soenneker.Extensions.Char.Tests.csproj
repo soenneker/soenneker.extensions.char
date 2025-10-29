@@ -20,7 +20,7 @@
         <PackageReference Include="AwesomeAssertions" Version="9.2.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
         <PackageReference Include="Soenneker.Tests.Benchmark" Version="3.0.47" />
-        
+
         <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -29,7 +29,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-    <PackageReference Include="xUnit.v3" Version="3.1.0" /></ItemGroup>
+        <PackageReference Include="xUnit.v3" Version="3.1.0" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Soenneker.Extensions.Char.csproj" />
