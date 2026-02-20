@@ -114,32 +114,41 @@ public static class CharExtension
     public static char ToAsciiLower(this char c) => IsAsciiUpper(c) ? (char)(c + _bitChange) : c;
 
     /// <summary>
-    /// Converts an ASCII lowercase character ('a'..'z') to uppercase ('A'..'Z').
-    /// All other characters remain unchanged.
+    /// Converts the specified Unicode character to its uppercase equivalent using the invariant culture.
     /// </summary>
-    /// <remarks>
-    /// Despite the name, this method is ASCII-only and does not perform full Unicode casing.
-    /// </remarks>
-    /// <param name="c">The character to convert.</param>
-    /// <returns>The uppercase ASCII equivalent if applicable; otherwise, the original character.</returns>
+    /// <remarks>This method performs a fast conversion for ASCII characters and delegates to the standard
+    /// library for non-ASCII characters. The conversion is culture-invariant and does not depend on the current
+    /// locale.</remarks>
+    /// <param name="c">The Unicode character to convert to uppercase.</param>
+    /// <returns>The uppercase equivalent of the specified character, or the original character if it has no uppercase mapping.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static char ToUpperInvariant(this char c) => ToAsciiUpper(c);
+    public static char ToUpperInvariant(this char c)
+    {
+        uint uc = c;
+
+        if (uc <= 127)
+            return uc - 'a' <= 25u ? (char)(uc - _bitChange) : c;
+
+        return char.ToUpperInvariant(c);
+    }
 
     /// <summary>
-    /// Converts an ASCII uppercase character ('A'..'Z') to lowercase ('a'..'z').
-    /// All other characters remain unchanged.
+    /// Converts the specified Unicode character to its lowercase equivalent using the invariant culture.
     /// </summary>
-    /// <remarks>
-    /// Despite the name, this method is ASCII-only and does not perform full Unicode casing.
-    /// </remarks>
-    /// <param name="c">The character to convert.</param>
-    /// <returns>The lowercase ASCII equivalent if applicable; otherwise, the original character.</returns>
+    /// <remarks>This method performs a culture-insensitive conversion. It is suitable for scenarios where
+    /// predictable, culture-independent casing is required, such as protocol or file format processing.</remarks>
+    /// <param name="c">The Unicode character to convert to lowercase.</param>
+    /// <returns>A character that is the lowercase equivalent of the input character, or the original character if it has no
+    /// lowercase equivalent.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static char ToLowerInvariant(this char c) => ToAsciiLower(c);
+    public static char ToLowerInvariant(this char c)
+    {
+        uint uc = c;
+        if (uc <= 127)
+            return uc - 'A' <= 25u ? (char)(uc + _bitChange) : c;
 
-    // -------------------------
-    // Fast classification (ASCII + Unicode fallback)
-    // -------------------------
+        return char.ToLowerInvariant(c);
+    }
 
     /// <summary>
     /// Determines whether the character is a letter or digit using a fast ASCII path,
@@ -168,7 +177,7 @@ public static class CharExtension
 
         // ASCII whitespace: ' ' or 0x09..0x0D
         if (uc <= 32)
-            return uc == 32 || (uc - 9) <= 4;
+            return uc == 32 || uc - 9 <= 4;
 
         if (uc <= 127)
             return false;
