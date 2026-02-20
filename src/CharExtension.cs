@@ -235,4 +235,14 @@ public static class CharExtension
             ? ((_tokenSepMaskLo >> (int)uc) & 1UL) != 0
             : ((_tokenSepMaskHi >> (int)(uc - 64)) & 1UL) != 0;
     }
+
+    /// <summary>
+    /// Determines whether the specified character is an ASCII newline character (line feed '\n' or carriage return
+    /// '\r').
+    /// </summary>
+    /// <param name="c">The character to evaluate.</param>
+    /// <returns>true if the character is '\n' or '\r'; otherwise, false.</returns>
+    [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsAsciiNewLine(this char c)
+        => c is '\n' or '\r';
 }
