@@ -99,9 +99,9 @@ public class CharExtensionTests
     [InlineData(' ', false)]
     [InlineData('@', false)]
     [InlineData('é', false)]
-    public void IsAsciiAlphaNum_ReturnsExpectedResult(char input, bool expected)
+    public void IsAsciiLetterOrDigit_ReturnsExpectedResult(char input, bool expected)
     {
-        bool result = input.IsAsciiAlphaNum();
+        bool result = input.IsAsciiLetterOrDigit();
         result.Should().Be(expected);
     }
 
@@ -225,7 +225,7 @@ public class CharExtensionTests
     [InlineData('①', false)]
     public void IsDigit_ReturnsExpectedResult(char input, bool expected)
     {
-        bool result = input.IsDigit();
+        bool result = input.IsDigitFast();
         result.Should().Be(expected);
     }
 
@@ -242,7 +242,7 @@ public class CharExtensionTests
     [InlineData('α', true)]
     public void IsLetter_ReturnsExpectedResult(char input, bool expected)
     {
-        bool result = input.IsLetter();
+        bool result = input.IsLetterFast();
         result.Should().Be(expected);
     }
 
@@ -338,12 +338,12 @@ public class CharExtensionTests
     [Fact]
     public void ToAsciiUpper_And_ToAsciiLower_AreInverses_ForAsciiLetters()
     {
-        for (char c = 'a'; c <= 'z'; c++)
+        for (var c = 'a'; c <= 'z'; c++)
         {
             c.ToAsciiUpper().ToAsciiLower().Should().Be(c);
         }
 
-        for (char c = 'A'; c <= 'Z'; c++)
+        for (var c = 'A'; c <= 'Z'; c++)
         {
             c.ToAsciiLower().ToAsciiUpper().Should().Be(c);
         }
@@ -358,8 +358,8 @@ public class CharExtensionTests
         {
             c.IsLetterOrDigitFast().Should().Be(char.IsLetterOrDigit(c));
             c.IsWhiteSpaceFast().Should().Be(char.IsWhiteSpace(c));
-            c.IsDigit().Should().Be(char.IsDigit(c));
-            c.IsLetter().Should().Be(char.IsLetter(c));
+            c.IsDigitFast().Should().Be(char.IsDigit(c));
+            c.IsLetterFast().Should().Be(char.IsLetter(c));
             c.IsUpperFast().Should().Be(char.IsUpper(c));
             c.IsLowerFast().Should().Be(char.IsLower(c));
         }

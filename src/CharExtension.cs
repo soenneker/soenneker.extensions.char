@@ -9,8 +9,6 @@ namespace Soenneker.Extensions.Char;
 /// </summary>
 public static class CharExtension
 {
-    private const int _bitChange = 32; // Difference between uppercase and lowercase in ASCII
-
     // ASCII 0..63
     private const ulong _tokenSepMaskLo =
         (1UL << 9) | // \t
@@ -74,7 +72,7 @@ public static class CharExtension
     /// <param name="c">The character to evaluate.</param>
     /// <returns><see langword="true"/> if the character is ASCII alphanumeric; otherwise, <see langword="false"/>.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsAsciiAlphaNum(this char c)
+    public static bool IsAsciiLetterOrDigit(this char c)
     {
         // digits first often wins for numeric-heavy inputs (IDs), but either is fine
         return (uint)(c - '0') <= 9 || (uint)((c | 0x20) - 'a') <= 25;
@@ -90,9 +88,8 @@ public static class CharExtension
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsAsciiWhiteSpace(this char c)
     {
-        if (c <= ' ')
-            return c == ' ' || (uint)(c - '\t') <= '\r' - '\t'; // \t \n \v \f \r
-        return false;
+        uint uc = c;
+        return uc <= 0x20u && (uc == 0x20u || uc - 0x09u <= 4u); // ' ' or 0x09..0x0D
     }
 
     /// <summary>
@@ -102,7 +99,11 @@ public static class CharExtension
     /// <param name="c">The character to convert.</param>
     /// <returns>The uppercase ASCII equivalent if applicable; otherwise, the original character.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static char ToAsciiUpper(this char c) => IsAsciiLower(c) ? (char)(c - _bitChange) : c;
+    public static char ToAsciiUpper(this char c)
+    {
+        uint uc = c;
+        return uc - 'a' <= 25u ? (char)(uc & ~0x20u) : c;
+    }
 
     /// <summary>
     /// Converts an ASCII uppercase letter ('A'–'Z') to its lowercase equivalent.
@@ -111,7 +112,11 @@ public static class CharExtension
     /// <param name="c">The character to convert.</param>
     /// <returns>The lowercase ASCII equivalent if applicable; otherwise, the original character.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static char ToAsciiLower(this char c) => IsAsciiUpper(c) ? (char)(c + _bitChange) : c;
+    public static char ToAsciiLower(this char c)
+    {
+        uint uc = c;
+        return uc - 'A' <= 25u ? (char)(uc | 0x20u) : c;
+    }
 
     /// <summary>
     /// Converts the specified Unicode character to its uppercase equivalent using the invariant culture.
@@ -126,8 +131,8 @@ public static class CharExtension
     {
         uint uc = c;
 
-        if (uc <= 127)
-            return uc - 'a' <= 25u ? (char)(uc - _bitChange) : c;
+        if (uc <= 0x7Fu)
+            return uc - 'a' <= 25u ? (char)(uc & ~0x20u) : c;
 
         return char.ToUpperInvariant(c);
     }
@@ -144,8 +149,9 @@ public static class CharExtension
     public static char ToLowerInvariant(this char c)
     {
         uint uc = c;
-        if (uc <= 127)
-            return uc - 'A' <= 25u ? (char)(uc + _bitChange) : c;
+
+        if (uc <= 0x7Fu)
+            return uc - 'A' <= 25u ? (char)(uc | 0x20u) : c;
 
         return char.ToLowerInvariant(c);
     }
@@ -160,7 +166,9 @@ public static class CharExtension
     public static bool IsLetterOrDigitFast(this char c)
     {
         uint uc = c;
-        return uc <= 127 ? uc - '0' <= 9 || (uc | 0x20) - 'a' <= 25 : char.IsLetterOrDigit(c);
+        return uc <= 0x7Fu
+            ? uc - '0' <= 9u || (uc | 0x20u) - 'a' <= 25u
+            : char.IsLetterOrDigit(c);
     }
 
     /// <summary>
@@ -175,11 +183,10 @@ public static class CharExtension
     {
         uint uc = c;
 
-        // ASCII whitespace: ' ' or 0x09..0x0D
-        if (uc <= 32)
-            return uc == 32 || uc - 9 <= 4;
+        if (uc <= 0x20u)
+            return uc == 0x20u || uc - 0x09u <= 4u;
 
-        if (uc <= 127)
+        if (uc <= 0x7Fu)
             return false;
 
         return char.IsWhiteSpace(c);
@@ -192,10 +199,10 @@ public static class CharExtension
     /// <param name="c">The character to evaluate.</param>
     /// <returns><see langword="true"/> if the character is a digit; otherwise, <see langword="false"/>.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsDigit(this char c)
+    public static bool IsDigitFast(this char c)
     {
         uint uc = c;
-        return uc <= 127 ? uc - '0' <= 9 : char.IsDigit(c);
+        return uc <= 0x7Fu ? uc - '0' <= 9u : char.IsDigit(c);
     }
 
     /// <summary>
@@ -205,7 +212,13 @@ public static class CharExtension
     /// <param name="c">The character to evaluate.</param>
     /// <returns><see langword="true"/> if the character is a letter; otherwise, <see langword="false"/>.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsLetter(this char c) => c <= 127 ? IsAsciiLetter(c) : char.IsLetter(c);
+    public static bool IsLetterFast(this char c)
+    {
+        uint uc = c;
+        return uc <= 0x7Fu
+            ? (uc | 0x20u) - 'a' <= 25u
+            : char.IsLetter(c);
+    }
 
     /// <summary>
     /// Determines whether the character is uppercase using a fast ASCII path,
@@ -214,7 +227,13 @@ public static class CharExtension
     /// <param name="c">The character to evaluate.</param>
     /// <returns><see langword="true"/> if the character is uppercase; otherwise, <see langword="false"/>.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsUpperFast(this char c) => c <= 127 ? IsAsciiUpper(c) : char.IsUpper(c);
+    public static bool IsUpperFast(this char c)
+    {
+        uint uc = c;
+        return uc <= 0x7Fu
+            ? uc - 'A' <= 25u
+            : char.IsUpper(c);
+    }
 
     /// <summary>
     /// Determines whether the character is lowercase using a fast ASCII path,
@@ -223,7 +242,13 @@ public static class CharExtension
     /// <param name="c">The character to evaluate.</param>
     /// <returns><see langword="true"/> if the character is lowercase; otherwise, <see langword="false"/>.</returns>
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsLowerFast(this char c) => c <= 127 ? IsAsciiLower(c) : char.IsLower(c);
+    public static bool IsLowerFast(this char c)
+    {
+        uint uc = c;
+        return uc <= 0x7Fu
+            ? uc - 'a' <= 25u
+            : char.IsLower(c);
+    }
 
     /// <summary>
     /// Determines whether the character is considered a token separator.
@@ -237,12 +262,13 @@ public static class CharExtension
     {
         uint uc = c;
 
-        if (uc > 127)
+        if (uc > 0x7Fu) 
             return false;
 
-        return uc < 64
-            ? ((_tokenSepMaskLo >> (int)uc) & 1UL) != 0
-            : ((_tokenSepMaskHi >> (int)(uc - 64)) & 1UL) != 0;
+        var idx = (int)uc;
+        return idx < 64
+            ? ((_tokenSepMaskLo >> idx) & 1UL) != 0
+            : ((_tokenSepMaskHi >> (idx - 64)) & 1UL) != 0;
     }
 
     /// <summary>
@@ -254,4 +280,16 @@ public static class CharExtension
     [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsAsciiNewLine(this char c)
         => c is '\n' or '\r';
+
+    /// <summary>
+    /// Determines whether the specified character is recognized as a Unicode newline character.
+    /// </summary>
+    /// <remarks>This method checks for the most common Unicode newline characters, including line feed (LF),
+    /// carriage return (CR), next line (NEL), line separator (LS), and paragraph separator (PS). It is optimized for
+    /// performance and suitable for high-throughput scenarios such as text parsing.</remarks>
+    /// <param name="c">The character to evaluate.</param>
+    /// <returns>true if the character is a line break character (LF, CR, NEL, LS, or PS); otherwise, false.</returns>
+    [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsNewLineFast(this char c)
+        => c is '\n' or '\r' or '\u0085' or '\u2028' or '\u2029';
 }

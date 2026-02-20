@@ -22,6 +22,6 @@ public class IsDigitBenchmark
     [Benchmark]
     public bool IsDigit()
     {
-        return _c.IsDigit();
+        return _c.IsDigitFast();
     }
 }
