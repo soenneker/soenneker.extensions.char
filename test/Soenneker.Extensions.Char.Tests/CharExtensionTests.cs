@@ -1,310 +1,309 @@
 using AwesomeAssertions;
-using Xunit;
 
 namespace Soenneker.Extensions.Char.Tests;
 
 public class CharExtensionTests
 {
-    [Theory]
-    [InlineData('\0', true)]
-    [InlineData('A', true)]
-    [InlineData('z', true)]
-    [InlineData('0', true)]
-    [InlineData('\x7F', true)]
-    [InlineData('\x80', false)]
-    [InlineData('é', false)]
-    [InlineData('日', false)]
+    [Test]
+    [Arguments('\0', true)]
+    [Arguments('A', true)]
+    [Arguments('z', true)]
+    [Arguments('0', true)]
+    [Arguments('\x7F', true)]
+    [Arguments('\x80', false)]
+    [Arguments('é', false)]
+    [Arguments('日', false)]
     public void IsAscii_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAscii();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('Z', true)]
-    [InlineData('M', true)]
-    [InlineData('a', false)]
-    [InlineData('z', false)]
-    [InlineData('0', false)]
-    [InlineData('@', false)]
-    [InlineData('[', false)]
-    [InlineData('Ä', false)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('Z', true)]
+    [Arguments('M', true)]
+    [Arguments('a', false)]
+    [Arguments('z', false)]
+    [Arguments('0', false)]
+    [Arguments('@', false)]
+    [Arguments('[', false)]
+    [Arguments('Ä', false)]
     public void IsAsciiUpper_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiUpper();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('a', true)]
-    [InlineData('z', true)]
-    [InlineData('m', true)]
-    [InlineData('A', false)]
-    [InlineData('Z', false)]
-    [InlineData('0', false)]
-    [InlineData('`', false)]
-    [InlineData('{', false)]
-    [InlineData('ä', false)]
+    [Test]
+    [Arguments('a', true)]
+    [Arguments('z', true)]
+    [Arguments('m', true)]
+    [Arguments('A', false)]
+    [Arguments('Z', false)]
+    [Arguments('0', false)]
+    [Arguments('`', false)]
+    [Arguments('{', false)]
+    [Arguments('ä', false)]
     public void IsAsciiLower_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiLower();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('Z', true)]
-    [InlineData('a', true)]
-    [InlineData('z', true)]
-    [InlineData('M', true)]
-    [InlineData('m', true)]
-    [InlineData('0', false)]
-    [InlineData('9', false)]
-    [InlineData('@', false)]
-    [InlineData('[', false)]
-    [InlineData('`', false)]
-    [InlineData('{', false)]
-    [InlineData('é', false)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('Z', true)]
+    [Arguments('a', true)]
+    [Arguments('z', true)]
+    [Arguments('M', true)]
+    [Arguments('m', true)]
+    [Arguments('0', false)]
+    [Arguments('9', false)]
+    [Arguments('@', false)]
+    [Arguments('[', false)]
+    [Arguments('`', false)]
+    [Arguments('{', false)]
+    [Arguments('é', false)]
     public void IsAsciiLetter_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiLetter();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('0', true)]
-    [InlineData('9', true)]
-    [InlineData('5', true)]
-    [InlineData('/', false)]
-    [InlineData(':', false)]
-    [InlineData('A', false)]
-    [InlineData('a', false)]
-    [InlineData('٥', false)]
+    [Test]
+    [Arguments('0', true)]
+    [Arguments('9', true)]
+    [Arguments('5', true)]
+    [Arguments('/', false)]
+    [Arguments(':', false)]
+    [Arguments('A', false)]
+    [Arguments('a', false)]
+    [Arguments('٥', false)]
     public void IsAsciiDigit_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiDigit();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('Z', true)]
-    [InlineData('a', true)]
-    [InlineData('z', true)]
-    [InlineData('0', true)]
-    [InlineData('9', true)]
-    [InlineData('_', false)]
-    [InlineData('-', false)]
-    [InlineData(' ', false)]
-    [InlineData('@', false)]
-    [InlineData('é', false)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('Z', true)]
+    [Arguments('a', true)]
+    [Arguments('z', true)]
+    [Arguments('0', true)]
+    [Arguments('9', true)]
+    [Arguments('_', false)]
+    [Arguments('-', false)]
+    [Arguments(' ', false)]
+    [Arguments('@', false)]
+    [Arguments('é', false)]
     public void IsAsciiLetterOrDigit_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiLetterOrDigit();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData(' ', true)]
-    [InlineData('\t', true)]
-    [InlineData('\n', true)]
-    [InlineData('\r', true)]
-    [InlineData('\v', true)]
-    [InlineData('\f', true)]
-    [InlineData('A', false)]
-    [InlineData('0', false)]
-    [InlineData('\0', false)]
-    [InlineData('\x1F', false)]
-    [InlineData('\x7F', false)]
-    [InlineData('\u00A0', false)]
+    [Test]
+    [Arguments(' ', true)]
+    [Arguments('\t', true)]
+    [Arguments('\n', true)]
+    [Arguments('\r', true)]
+    [Arguments('\v', true)]
+    [Arguments('\f', true)]
+    [Arguments('A', false)]
+    [Arguments('0', false)]
+    [Arguments('\0', false)]
+    [Arguments('\x1F', false)]
+    [Arguments('\x7F', false)]
+    [Arguments('\u00A0', false)]
     public void IsAsciiWhiteSpace_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsAsciiWhiteSpace();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('a', 'A')]
-    [InlineData('z', 'Z')]
-    [InlineData('m', 'M')]
-    [InlineData('A', 'A')]
-    [InlineData('Z', 'Z')]
-    [InlineData('0', '0')]
-    [InlineData('_', '_')]
-    [InlineData(' ', ' ')]
-    [InlineData('é', 'é')]
+    [Test]
+    [Arguments('a', 'A')]
+    [Arguments('z', 'Z')]
+    [Arguments('m', 'M')]
+    [Arguments('A', 'A')]
+    [Arguments('Z', 'Z')]
+    [Arguments('0', '0')]
+    [Arguments('_', '_')]
+    [Arguments(' ', ' ')]
+    [Arguments('é', 'é')]
     public void ToAsciiUpper_ReturnsExpectedResult(char input, char expected)
     {
         char result = input.ToAsciiUpper();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', 'a')]
-    [InlineData('Z', 'z')]
-    [InlineData('M', 'm')]
-    [InlineData('a', 'a')]
-    [InlineData('z', 'z')]
-    [InlineData('0', '0')]
-    [InlineData('_', '_')]
-    [InlineData(' ', ' ')]
-    [InlineData('É', 'É')]
+    [Test]
+    [Arguments('A', 'a')]
+    [Arguments('Z', 'z')]
+    [Arguments('M', 'm')]
+    [Arguments('a', 'a')]
+    [Arguments('z', 'z')]
+    [Arguments('0', '0')]
+    [Arguments('_', '_')]
+    [Arguments(' ', ' ')]
+    [Arguments('É', 'É')]
     public void ToAsciiLower_ReturnsExpectedResult(char input, char expected)
     {
         char result = input.ToAsciiLower();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('a', 'A')]
-    [InlineData('z', 'Z')]
-    [InlineData('A', 'A')]
-    [InlineData('Z', 'Z')]
-    [InlineData('0', '0')]
-    [InlineData('_', '_')]
+    [Test]
+    [Arguments('a', 'A')]
+    [Arguments('z', 'Z')]
+    [Arguments('A', 'A')]
+    [Arguments('Z', 'Z')]
+    [Arguments('0', '0')]
+    [Arguments('_', '_')]
     public void ToUpperInvariant_ConvertsToLowercaseLettersToUppercase(char input, char expected)
     {
         char result = input.ToUpperInvariant();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('a', 'a')]
-    [InlineData('z', 'z')]
-    [InlineData('A', 'a')]
-    [InlineData('Z', 'z')]
-    [InlineData('0', '0')]
-    [InlineData('_', '_')]
+    [Test]
+    [Arguments('a', 'a')]
+    [Arguments('z', 'z')]
+    [Arguments('A', 'a')]
+    [Arguments('Z', 'z')]
+    [Arguments('0', '0')]
+    [Arguments('_', '_')]
     public void ToLowerInvariant_ConvertsToUppercaseLettersToLowercase(char input, char expected)
     {
         char result = input.ToLowerInvariant();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('z', true)]
-    [InlineData('0', true)]
-    [InlineData('9', true)]
-    [InlineData(' ', false)]
-    [InlineData('_', false)]
-    [InlineData('-', false)]
-    [InlineData('é', true)]
-    [InlineData('日', true)]
-    [InlineData('٥', true)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('z', true)]
+    [Arguments('0', true)]
+    [Arguments('9', true)]
+    [Arguments(' ', false)]
+    [Arguments('_', false)]
+    [Arguments('-', false)]
+    [Arguments('é', true)]
+    [Arguments('日', true)]
+    [Arguments('٥', true)]
     public void IsLetterOrDigitFast_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsLetterOrDigitFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData(' ', true)]
-    [InlineData('\t', true)]
-    [InlineData('\n', true)]
-    [InlineData('\r', true)]
-    [InlineData('A', false)]
-    [InlineData('0', false)]
-    [InlineData('\u00A0', true)]
-    [InlineData('\u2003', true)]
+    [Test]
+    [Arguments(' ', true)]
+    [Arguments('\t', true)]
+    [Arguments('\n', true)]
+    [Arguments('\r', true)]
+    [Arguments('A', false)]
+    [Arguments('0', false)]
+    [Arguments('\u00A0', true)]
+    [Arguments('\u2003', true)]
     public void IsWhiteSpaceFast_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsWhiteSpaceFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('0', true)]
-    [InlineData('9', true)]
-    [InlineData('5', true)]
-    [InlineData('A', false)]
-    [InlineData('a', false)]
-    [InlineData(' ', false)]
-    [InlineData('٥', true)]
-    [InlineData('①', false)]
+    [Test]
+    [Arguments('0', true)]
+    [Arguments('9', true)]
+    [Arguments('5', true)]
+    [Arguments('A', false)]
+    [Arguments('a', false)]
+    [Arguments(' ', false)]
+    [Arguments('٥', true)]
+    [Arguments('①', false)]
     public void IsDigit_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsDigitFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('z', true)]
-    [InlineData('M', true)]
-    [InlineData('0', false)]
-    [InlineData('9', false)]
-    [InlineData(' ', false)]
-    [InlineData('_', false)]
-    [InlineData('é', true)]
-    [InlineData('日', true)]
-    [InlineData('α', true)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('z', true)]
+    [Arguments('M', true)]
+    [Arguments('0', false)]
+    [Arguments('9', false)]
+    [Arguments(' ', false)]
+    [Arguments('_', false)]
+    [Arguments('é', true)]
+    [Arguments('日', true)]
+    [Arguments('α', true)]
     public void IsLetter_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsLetterFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('A', true)]
-    [InlineData('Z', true)]
-    [InlineData('M', true)]
-    [InlineData('a', false)]
-    [InlineData('z', false)]
-    [InlineData('0', false)]
-    [InlineData('É', true)]
-    [InlineData('Ä', true)]
-    [InlineData('é', false)]
+    [Test]
+    [Arguments('A', true)]
+    [Arguments('Z', true)]
+    [Arguments('M', true)]
+    [Arguments('a', false)]
+    [Arguments('z', false)]
+    [Arguments('0', false)]
+    [Arguments('É', true)]
+    [Arguments('Ä', true)]
+    [Arguments('é', false)]
     public void IsUpperFast_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsUpperFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData('a', true)]
-    [InlineData('z', true)]
-    [InlineData('m', true)]
-    [InlineData('A', false)]
-    [InlineData('Z', false)]
-    [InlineData('0', false)]
-    [InlineData('é', true)]
-    [InlineData('ä', true)]
-    [InlineData('É', false)]
+    [Test]
+    [Arguments('a', true)]
+    [Arguments('z', true)]
+    [Arguments('m', true)]
+    [Arguments('A', false)]
+    [Arguments('Z', false)]
+    [Arguments('0', false)]
+    [Arguments('é', true)]
+    [Arguments('ä', true)]
+    [Arguments('É', false)]
     public void IsLowerFast_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsLowerFast();
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [InlineData(' ', true)]
-    [InlineData('\t', true)]
-    [InlineData('\n', true)]
-    [InlineData('\r', true)]
-    [InlineData('-', true)]
-    [InlineData('.', true)]
-    [InlineData('/', true)]
-    [InlineData(':', true)]
-    [InlineData(';', true)]
-    [InlineData('\\', true)]
-    [InlineData('_', true)]
-    [InlineData('A', false)]
-    [InlineData('a', false)]
-    [InlineData('0', false)]
-    [InlineData('@', false)]
-    [InlineData('#', false)]
-    [InlineData('!', false)]
-    [InlineData('\x80', false)]
-    [InlineData('é', false)]
+    [Test]
+    [Arguments(' ', true)]
+    [Arguments('\t', true)]
+    [Arguments('\n', true)]
+    [Arguments('\r', true)]
+    [Arguments('-', true)]
+    [Arguments('.', true)]
+    [Arguments('/', true)]
+    [Arguments(':', true)]
+    [Arguments(';', true)]
+    [Arguments('\\', true)]
+    [Arguments('_', true)]
+    [Arguments('A', false)]
+    [Arguments('a', false)]
+    [Arguments('0', false)]
+    [Arguments('@', false)]
+    [Arguments('#', false)]
+    [Arguments('!', false)]
+    [Arguments('\x80', false)]
+    [Arguments('é', false)]
     public void IsTokenSeparator_ReturnsExpectedResult(char input, bool expected)
     {
         bool result = input.IsTokenSeparator();
         result.Should().Be(expected);
     }
 
-    [Fact]
+    [Test]
     public void IsAscii_BoundaryValues_WorkCorrectly()
     {
         '\x00'.IsAscii().Should().BeTrue();
@@ -313,7 +312,7 @@ public class CharExtensionTests
         '\xFF'.IsAscii().Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public void IsAsciiLetter_BoundaryValues_WorkCorrectly()
     {
         '@'.IsAsciiLetter().Should().BeFalse();
@@ -326,7 +325,7 @@ public class CharExtensionTests
         '{'.IsAsciiLetter().Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public void IsAsciiDigit_BoundaryValues_WorkCorrectly()
     {
         '/'.IsAsciiDigit().Should().BeFalse();
@@ -335,7 +334,7 @@ public class CharExtensionTests
         ':'.IsAsciiDigit().Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public void ToAsciiUpper_And_ToAsciiLower_AreInverses_ForAsciiLetters()
     {
         for (var c = 'a'; c <= 'z'; c++)
@@ -349,7 +348,7 @@ public class CharExtensionTests
         }
     }
 
-    [Fact]
+    [Test]
     public void FastMethods_MatchCharMethods_ForUnicodeCharacters()
     {
         char[] unicodeChars = { 'é', 'É', 'ñ', 'Ñ', '日', '本', 'α', 'Ω', '٥', '\u00A0' };
@@ -365,7 +364,7 @@ public class CharExtensionTests
         }
     }
 
-    [Fact]
+    [Test]
     public void IsTokenSeparator_AllDefinedSeparators_ReturnTrue()
     {
         char[] separators = { '\t', '\n', '\r', ' ', '-', '.', '/', ':', ';', '\\', '_' };
@@ -376,7 +375,7 @@ public class CharExtensionTests
         }
     }
 
-    [Fact]
+    [Test]
     public void IsTokenSeparator_NonSeparators_ReturnFalse()
     {
         char[] nonSeparators = { 'A', 'z', '0', '9', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '=' };

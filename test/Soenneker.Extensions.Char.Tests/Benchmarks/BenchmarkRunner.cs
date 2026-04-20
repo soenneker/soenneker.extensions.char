@@ -1,70 +1,70 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Reports;
 using Soenneker.Benchmarking.Extensions.Summary;
 using Soenneker.Tests.Benchmark;
-using Xunit;
 
 namespace Soenneker.Extensions.Char.Tests.Benchmarks;
 
 public class BenchmarkRunner : BenchmarkTest
 {
-    public BenchmarkRunner(ITestOutputHelper outputHelper) : base(outputHelper)
+    public BenchmarkRunner() : base()
     {
     }
 
     //[Fact]
-    public async ValueTask IsDigit()
+    public async ValueTask IsDigit(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsDigitBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     // [Fact]
-    public async ValueTask IsLetterOrDigit()
+    public async ValueTask IsLetterOrDigit(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsLetterOrDigitBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     // [Fact]
-    public async ValueTask IsWhiteSpace()
+    public async ValueTask IsWhiteSpace(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsWhiteSpaceBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     //  [Fact]
-    public async ValueTask ToLowerInvariant()
+    public async ValueTask ToLowerInvariant(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<ToLowerInvariantBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     //  [Fact]
-    public async ValueTask ToUpperInvariant()
+    public async ValueTask ToUpperInvariant(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<ToUpperInvariantBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     //  [Fact]
-    public async ValueTask IsLower()
+    public async ValueTask IsLower(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsLowerBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 
     //   [Fact]
-    public async ValueTask IsUpper()
+    public async ValueTask IsUpper(CancellationToken cancellationToken)
     {
         Summary summary = BenchmarkDotNet.Running.BenchmarkRunner.Run<IsUpperBenchmark>(DefaultConf);
 
-        await summary.OutputSummaryToLog(OutputHelper, CancellationToken);
+        await summary.OutputSummaryToLog(cancellationToken);
     }
 }

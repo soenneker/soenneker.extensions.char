@@ -5,30 +5,22 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <OutputType>Exe</OutputType>
-        <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
-        <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
-        <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
-
     </PropertyGroup>
 
     <ItemGroup>
         <None Remove="appsettings.json" />
-        <None Remove="testconfig.json" />
     </ItemGroup>
 
     <ItemGroup>
         <Content Include="appsettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="testconfig.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
-        <PackageReference Include="Soenneker.Tests.Benchmark" Version="4.0.81" />
-        <PackageReference Include="xUnit.v3" Version="3.2.2" />
+        <PackageReference Include="Soenneker.Tests.Benchmark" Version="4.0.84" />
+        <PackageReference Include="TUnit" Version="1.37.0" />
     </ItemGroup>
 
     <ItemGroup>
