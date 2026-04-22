@@ -8,10 +8,6 @@ namespace Soenneker.Extensions.Char.Tests.Benchmarks;
 
 public class BenchmarkRunner : BenchmarkTest
 {
-    public BenchmarkRunner() : base()
-    {
-    }
-
     //[Test]
     public async ValueTask IsDigit(CancellationToken cancellationToken)
     {
