@@ -79,6 +79,25 @@ public static class CharExtension
     }
 
     /// <summary>
+    /// Determines whether the specified character equals the provided lowercase ASCII character,
+    /// ignoring ASCII casing.
+    /// </summary>
+    /// <param name="c">The character to compare.</param>
+    /// <param name="lower">
+    /// The lowercase ASCII character to compare against. This value is expected to be in the range
+    /// <c>'a'</c> through <c>'z'</c>.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if <paramref name="c"/> equals <paramref name="lower"/> or its uppercase
+    /// ASCII equivalent; otherwise, <see langword="false"/>.
+    /// </returns>
+    [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool EqualsAsciiIgnoreCase(this char c, char lower)
+    {
+        return c == lower || c == lower - 32;
+    }
+
+    /// <summary>
     /// Determines whether the character is ASCII whitespace.
     /// This checks for: space (U+0020), tab (U+0009), LF (U+000A),
     /// VT (U+000B), FF (U+000C), and CR (U+000D).
