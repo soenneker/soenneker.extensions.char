@@ -108,6 +108,8 @@ public class CharExtensionTests
     [Arguments(' ', true)]
     [Arguments('\t', true)]
     [Arguments('\n', true)]
+    [Arguments('\v', true)]
+    [Arguments('\f', true)]
     [Arguments('\r', true)]
     [Arguments('\v', true)]
     [Arguments('\f', true)]
@@ -367,7 +369,7 @@ public class CharExtensionTests
     [Test]
     public void IsTokenSeparator_AllDefinedSeparators_ReturnTrue()
     {
-        char[] separators = { '\t', '\n', '\r', ' ', '-', '.', '/', ':', ';', '\\', '_' };
+        char[] separators = { '\t', '\n', '\v', '\f', '\r', ' ', '-', '.', '/', ':', ';', '\\', '_' };
 
         foreach (char sep in separators)
         {

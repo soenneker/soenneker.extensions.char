@@ -13,6 +13,8 @@ public static class CharExtension
     private const ulong _tokenSepMaskLo =
         (1UL << 9) | // \t
         (1UL << 10) | // \n
+        (1UL << 11) | // \v
+        (1UL << 12) | // \f
         (1UL << 13) | // \r
         (1UL << 32) | // ' '
         (1UL << 45) | // '-'
